@@ -151,4 +151,4 @@ populate_worksheet(character_url, ws_characters)
 populate_worksheet(location_url, ws_locations)
 populate_worksheet(episode_url, ws_episodes)
 
-wb.save(r"C:/Users/ander/OneDrive/Documents/Work/Python/VetsInTech Python Course/Week 3/spreadsheets/w3d3_exercise.xlsx")
+wb.save(r"./Python/VetsInTech Python Course/Week 3/spreadsheets/w3d3_exercise.xlsx")
