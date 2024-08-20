@@ -33,4 +33,4 @@ for index, row in enumerate(range(2, 11)):  # We need the index to get the last 
     ws[f'B{row}'] = last_names[index]
 
 # B3. Save the file
-wb.save(r"/Users/ander/OneDrive/Documents/Work/VetsInTech Python Course/Week 2/spreadsheets/day_1_practice.xlsx")
+wb.save(r"./Work/VetsInTech Python Course/Week 2/spreadsheets/day_1_practice.xlsx")

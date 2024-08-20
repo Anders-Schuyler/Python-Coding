@@ -70,4 +70,4 @@ ws = wb.active
 for row in range(2, 12):  # This range covers rows 2 to 11, inclusive
     assign_names(row)
 # save your new workbook!
-wb.save(r"C:/Users/ander/OneDrive/Documents/Work/Python/VetsInTech Python Course/Week 2/spreadsheets/w2d3_exercise.xlsx")
+wb.save(r"./Python/VetsInTech Python Course/Week 2/spreadsheets/w2d3_exercise.xlsx")

@@ -5,11 +5,11 @@
 import os
 from openpyxl import load_workbook
 
-os.makedirs(r"C:\Users\ander\OneDrive\Documents\Work\VetsInTech Python Course\Week 2\spreadsheets", exist_ok=True)
+os.makedirs(r".\VetsInTech Python Course\Week 2\spreadsheets", exist_ok=True)
 
 # Import the workbook that you created in yesterday's exercise from
 # "./spreadsheets/inventory.xlsx"
-wb_path = r"C:\Users\ander\OneDrive\Documents\Work\VetsInTech Python Course\Week 2\spreadsheets\inventory.xlsx"
+wb_path = r".\VetsInTech Python Course\Week 2\spreadsheets\inventory.xlsx"
 wb = load_workbook(wb_path)
 
 # verify what sheet names are available

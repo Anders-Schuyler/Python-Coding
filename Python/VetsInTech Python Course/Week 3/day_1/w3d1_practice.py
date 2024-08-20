@@ -60,4 +60,4 @@ def dict_to_row(pokemon):
 # call the function with weedle!
 dict_to_row(weedle)
 
-wb.save(r"C:/Users/ander/OneDrive/Documents/Work/Python/VetsInTech Python Course/Week 3/spreadsheets/w3d1practice.xlsx")
+wb.save(r"./Python/VetsInTech Python Course/Week 3/spreadsheets/w3d1practice.xlsx")
