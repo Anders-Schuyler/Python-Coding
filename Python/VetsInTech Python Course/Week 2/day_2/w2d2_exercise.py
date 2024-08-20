@@ -5,7 +5,7 @@ from openpyxl import load_workbook
 
 # Import the workbook that you updated in today's practice from
 # "./spreadsheets/inventory.xlsx"
-wb_path = r"C:\Users\ander\OneDrive\Documents\Work\Python\VetsInTech Python Course\Week 2\spreadsheets\inventory.xlsx"
+wb_path = r".\VetsInTech Python Course\Week 2\spreadsheets\inventory.xlsx"
 wb = load_workbook(wb_path)
 
 # access and store the appropriate worksheet to the variable 'ws'

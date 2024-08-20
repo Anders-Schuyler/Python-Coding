@@ -53,4 +53,4 @@ for row, (name, product_id, max_amount, reorder_threshold, quantity) in enumerat
     ws.cell(row=row, column=4, value=reorder_threshold)
     ws.cell(row=row, column=5, value=quantity)
 # save your file
-w2d1_wb.save(r"C:\Users\ander\OneDrive\Documents\Work\VetsInTech Python Course\Week 2\spreadsheets\inventory.xlsx")
+w2d1_wb.save(r".\VetsInTech Python Course\Week 2\spreadsheets\inventory.xlsx")
