@@ -1,0 +1,14 @@
+Week 1: Overview
+
+This Week's Course Content: https://vetsintech.instructure.com/courses/190/pages/week-1-overview?module_item_id=11333
+-Syntax
+-Data Types
+-Comparison
+-Mathematical Operations
+-Loops
+
+Resources
+101++ Free Python Books: https://blog.finxter.com/free-python-books/
+Python for Non-Programmers: https://wiki.python.org/moin/BeginnersGuide/NonProgrammers
+W3 Python Tutorial: https://www.w3schools.com/python/default.asp
+Python.land: https://python.land/
