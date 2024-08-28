@@ -3,6 +3,7 @@ import requests
 import json
 import openpyxl
 from openpyxl.utils import get_column_letter
+from openpyxl.chart import LineChart, BarChart, PieChart, Reference, ScatterChart, Series
 from dotenv import load_dotenv
 from scipy.stats import pearsonr
 
@@ -15,8 +16,8 @@ census_api_key = os.getenv("CENSUS_API_KEY")
 
 # BLS API Configuration
 bls_series_ids = {
-    "national_unemployment_rate": "LNU04000000",  # Placeholder for national unemployment rate
-    "veteran_unemployment_rate": "LNU04049526"  # Example placeholder for veteran unemployment rate
+    "national_unemployment_rate": "LNU04000000",  # National unemployment rate
+    "veteran_unemployment_rate": "LNU04049526"    # Veteran unemployment rate
 }
 bls_start_year = "2021"
 bls_end_year = "2021"
@@ -24,12 +25,13 @@ bls_end_year = "2021"
 # Census API Configuration
 census_base_url = "https://api.census.gov/data/2021/acs/acs5"
 census_params = {
-    "get": "B21005_001E,B21005_002E,B21005_003E,B21005_007E,B21001_002E,B21001_003E,B21001_023E,B21001_024E",  # Total, Civilian population 18+, Military population 18+, Unemployed veterans, Male population, Female population, Male veterans, Female veterans
+    "get": "B21005_001E,B21005_002E,B21005_003E,B21005_007E,B21001_002E,B21001_003E,B21001_023E,B21001_024E,"
+           "B21005_010E,B21005_012E,B21005_011E,B21005_009E,B23003_014E",
     "for": "us:*",  # National data
     "key": census_api_key
 }
 
-# Mapping of Census variables to their clear meanings
+# Mapping of Census variables to their definitions
 census_variable_map = {
     "B21005_001E": "Total Civilian Population 18 Years and Over",
     "B21005_002E": "Civilian Population 18 Years and Over, Male",
@@ -38,7 +40,12 @@ census_variable_map = {
     "B21001_002E": "Total Male Population 18 Years and Over",
     "B21001_003E": "Total Female Population 18 Years and Over",
     "B21001_023E": "Total Male Veterans 18 Years and Over",
-    "B21001_024E": "Total Female Veterans 18 Years and Over"
+    "B21001_024E": "Total Female Veterans 18 Years and Over",
+    "B21005_010E": "Nonveteran, 18 to 34 years, Unemployed",
+    "B21005_012E": "Nonveteran, 18 to 34 years, Not in Labor Force",
+    "B21005_011E": "Nonveteran, 18 to 34 years, Employed",
+    "B21005_009E": "Nonveteran, 18 to 34 years, Total",
+    "B23003_014E": "Presence of Own Children Under 18 Years by Age of Householder"
 }
 
 def fetch_bls_data():
@@ -81,6 +88,34 @@ def calculate_correlation_analysis(national_rates, veteran_rates):
     """Calculate Pearson correlation between national and veteran unemployment rates."""
     correlation, _ = pearsonr(national_rates, veteran_rates)
     return correlation
+
+# Function to add charts to the Excel workbook
+def add_charts(workbook):
+    """Add various charts to the Excel workbook for data visualization."""
+    # Line Chart: National Unemployment Rate vs Veteran Unemployment Rate
+    sheet4 = workbook["Trend Analysis"]
+    line_chart = LineChart()
+    line_chart.title = "Unemployment Rate Trend Analysis"
+    line_chart.x_axis.title = "Month"
+    line_chart.y_axis.title = "Unemployment Rate"
+    
+    data = Reference(sheet4, min_col=2, min_row=1, max_col=3, max_row=len(sheet4['A']))
+    categories = Reference(sheet4, min_col=1, min_row=2, max_row=len(sheet4['A']))
+    line_chart.add_data(data, titles_from_data=True)
+    line_chart.set_categories(categories)
+    sheet4.add_chart(line_chart, "E5")
+
+    # Scatter Plot: Correlation Analysis
+    scatter_chart = ScatterChart()
+    scatter_chart.title = "Correlation Between National and Veteran Unemployment Rates"
+    scatter_chart.x_axis.title = "National Unemployment Rate"
+    scatter_chart.y_axis.title = "Veteran Unemployment Rate"
+    
+    xvalues = Reference(sheet4, min_col=2, min_row=2, max_row=len(sheet4['A']))
+    yvalues = Reference(sheet4, min_col=3, min_row=2, max_row=len(sheet4['A']))
+    series = Series(yvalues, xvalues, title_from_data=True)
+    scatter_chart.series.append(series)
+    sheet4.add_chart(scatter_chart, "L5")
 
 def write_to_excel(bls_data, census_data, veteran_unemployment_rate, civilian_unemployment_rate, correlation, filename):
     """Write BLS and Census data to an Excel file using openpyxl."""
@@ -174,6 +209,9 @@ def write_to_excel(bls_data, census_data, veteran_unemployment_rate, civilian_un
             max_length = max(len(str(cell.value)) for cell in col)
             adjusted_width = (max_length + 2)
             sheet.column_dimensions[get_column_letter(col[0].column)].width = adjusted_width
+
+    # Add charts to the workbook
+    add_charts(workbook)
 
     # Save the workbook to the specified location
     workbook.save(filename)
